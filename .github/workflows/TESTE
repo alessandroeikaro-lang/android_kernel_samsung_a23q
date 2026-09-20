@@ -1,0 +1,4 @@
+   head -n 5 Makefile
+   ls arch/arm64/configs
+   ls arch/arm64/configs/vendor
+   ls
