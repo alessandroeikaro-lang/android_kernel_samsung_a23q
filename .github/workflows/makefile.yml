@@ -12,7 +12,7 @@ on:
       CLANG_EIGHTEEN:
         description: Use clang 18 (optional)
         type: boolean
-        
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
         path: android_kernel_samsung_a23
         show-progress: false
         fetch-depth: 1
-        
+
     - name: Prepare dependencies
       run: |
         sudo apt update -y && sudo apt upgrade -y
@@ -89,19 +89,20 @@ jobs:
         buildDetails="`make kernelversion`-`echo $DEVICE`_`echo $gitsha1`-`date +'%Y%m%d%H%M%S'`" && echo "buildDetails=$buildDetails" >> $GITHUB_OUTPUT
         mv out/.config out/build_config.txt
       working-directory: android_kernel_samsung_a23
-      
+
     - name: Upload config
       uses: actions/upload-artifact@v4
       with:
         name: Config-${{ steps.buildKernel.outputs.buildDetails }}
         path: android_kernel_samsung_a23/out/build_config.txt
-        
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: Build-${{ steps.buildKernel.outputs.buildDetails }}
         path: |
           android_kernel_samsung_a23/out/arch/arm64/boot/*.gz
+          android_kernel_samsung_a23/out/arch/arm64/boot/dts/*
           android_kernel_samsung_a23/out/arch/arm64/boot/dts/qcom*
 
     - name: Upload AnyKernel3
